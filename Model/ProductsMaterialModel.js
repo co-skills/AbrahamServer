@@ -7,6 +7,10 @@ const MaterialSchema = new Schema ({
         type:String,
         required:true
     },
+    collectionName:{
+        type:String,
+        required:true
+    },
     Price:{
         type:Number,
         required:true

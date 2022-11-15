@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+
 const {
     material,
     products
@@ -46,13 +47,23 @@ const {
 
 const GetandPopulateProducts = async (req, res)=>{
   try {
-    const mat=await material.find({})
+    const {name} = req.params
 
+    const mat=await material.find({collectionName:name})
+
+   
+    
     console.log(mat)
+     //res.status(200).json(mat)
 
-    // res.status(200).json(mat)
+    const collection = req.body
 
-    const pro = await products.findOneAndUpdate({collectionName: "roofing"},{materialss:mat} )
+    //   if (mat.collectionName == collection){
+    //     const pro = await products.findOneAndUpdate({collectionName: collection}, {materialss:mat} )
+    // }
+    
+
+    const pro = await products.findOneAndUpdate({collectionName:name},{materialss:mat} )
 
     console.log(pro)
     res.status(200).json(pro)

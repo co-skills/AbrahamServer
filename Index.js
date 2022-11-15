@@ -38,7 +38,7 @@ mongoose.connect(process.env.MONOURL)
 .then( ()=>{
 
     app.listen(process.env.PORT, (req,res)=>{
-        console.log("database connected..... listening on port 6000")
+        console.log("database connected..... listening on port 5000")
     })
 })
 .catch((err)=>{

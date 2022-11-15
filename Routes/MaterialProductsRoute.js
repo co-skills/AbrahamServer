@@ -12,7 +12,7 @@ const router = express.Router()
 
 // router.put("/produts/:id", updateProduct)
 
- router.get("/products",GetandPopulateProducts)
+ router.get("/products/:name",GetandPopulateProducts)
 
 
 module.exports=router

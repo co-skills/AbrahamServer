@@ -6,10 +6,11 @@ const {
 
 const createMaterial= async (req,res)=>{
   try {
-    const {Name, Price, AmonutSold} = req.body
+    const {Name,collectionName, Price, AmonutSold} = req.body
 
     const mat= await material.create({
       Name,
+      collectionName,
       Price,
       AmonutSold
     })
