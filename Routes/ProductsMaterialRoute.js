@@ -18,7 +18,7 @@ router.post ("/material", createMaterial)
 
 router.post("/products",createProduct )
 
-router.get("/products/:name",GetandPopulateProducts)
+router.get("https://abe-api.onrender.com/:name",GetandPopulateProducts)
 
 router.delete('/material/:id', DeleteMaterial)
 
