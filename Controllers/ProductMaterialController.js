@@ -23,29 +23,7 @@ const createMaterial= async (req,res)=>{
       res.status(404).json({error:error.message})
     }
   }
-
-    // const mat = new material({
-    //     _id: new mongoose.Types.ObjectId(),
-    //     Name: 'Ian Fleming',
-    //     Price: 50,
-    //     AmonutSold:10
-    //   });
-      
-    //   mat.save(function (err) {
-    //     if (err) return handleError(err);
-      
-    //     const pro = new products({
-    //         collectionName: 'Casino Royale',
-    //         materialss: mat    // assign the _id from the person
-    //     });
-      
-    //     pro.save(function (err) {
-    //       if (err) return handleError(err);
-    //       console.log("good")
-    //     });
-    //   });
-
-    //   products.findOne({ collectionName: 'Casino Royale' }).populate("materialss") 
+ 
 }
 
 const createProduct = async (req, res)=>{
@@ -68,7 +46,14 @@ const createProduct = async (req, res)=>{
 
 const GetandPopulateProducts = async (req, res)=>{
   try {
-    const pro = await products.find({})
+    const {name} = req.params
+
+    const mat=await material.find({collectionName:name})
+     
+    console.log(mat)
+    const pro = await products.findOneAndUpdate({collectionName:name},{materialss:mat} )
+
+    console.log(pro)
     res.status(200).json(pro)
   } 
   catch (error) {
@@ -78,23 +63,10 @@ const GetandPopulateProducts = async (req, res)=>{
   }
 }
 
-const updateProduct = async (req, res)=>{
-  try {
-    const pro =await  products.findOneAndUpdate({id:req.params.id},{$push:{materialss:req.body.materialId}}, {new:true})
 
-  res.status(200).json (pro)
-  } 
-  catch (error) {
-    return(
-      error ? res.status(400).json({error:error.message}) :null
-    )
-    
-  }
-}
 
 module.exports={
     createMaterial,
     createProduct,
-    updateProduct,
     GetandPopulateProducts
 }
