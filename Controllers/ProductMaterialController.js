@@ -4,6 +4,16 @@ const {
     products
 }= require("../Model/ProductsMaterialModel")
 
+const GetMaterials = async (req, res)=>{
+  try {
+    const mat = await material.find({}).sort({createdAt:-1})
+
+    res.status(200).json(mat)
+  } 
+  catch (error) {
+    error ? res.status(400).json ({error:error.message}) : null
+  }
+}
 const createMaterial= async (req,res)=>{
   try {
     const {Name,collectionName, Price, AmonutSold} = req.body
@@ -62,11 +72,59 @@ const GetandPopulateProducts = async (req, res)=>{
     )
   }
 }
+const DeleteMaterial = async (req,res)=>{
+  const {id} = req.params
 
+  if(!mongoose.Types.ObjectId.isValid(id)){
+      return res.status(404).json({error:'Information does not Exist'})
+  }
+
+  const Mat = await MatModel.findOneAndDelete({_id:id})
+
+  if(!Mat){
+      return res.status(400).json({error:"Information does not Exist"})
+  }
+  res.status(200).json(Mat)
+}
+
+const DeleteProducts = async (req,res)=>{
+  const {name} = req.params
+
+  
+  const pro = await products.findOneAndDelete({collectionName:name})
+
+  if(!pro){
+      return res.status(400).json({error:"products does not Exist"})
+  }
+  res.status(200).json(pro)
+}
+
+const UpdateMaterial= async (req,res)=>{
+  const {id}= req.params
+
+  if (!mongoose.Types.ObjectId.isValid(id)){
+      return res.status(404).json(
+          {error:"Such Mat does not exist"}
+      )
+  }
+  const Mat = await material.findOneAndUpdate({_id:id},{
+      ...req.body
+  })
+
+  if (!Mat){
+      return res.status(400).json({error:'No such Information Exist'})
+  }
+
+  res.status(200).json(Mat)
+}
 
 
 module.exports={
+    GetMaterials,
     createMaterial,
     createProduct,
-    GetandPopulateProducts
+    UpdateMaterial,
+    DeleteMaterial,
+    GetandPopulateProducts,
+    DeleteProducts
 }
