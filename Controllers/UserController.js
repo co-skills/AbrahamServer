@@ -1,8 +1,14 @@
 const express = require("express")
 const bcrypt = require("bcrypt")
 const nodemailer = require("nodemailer")
-
+const validator = require("validator")
+const jwt = require("jsonwebtoken")
 const {v4:uuidv4} = require("uuid")  // the  uuid has a file model called version4(v4) and that is what we need in our application and while importing it we want to reffer to it 
+
+// Reuseable function to generate Token
+const CreateToken= (_id)=>{
+    return jwt.sign({_id}, process.env.SECRET,{expiresIn:"3d"})
+}
 
 require("dotenv").config()
 const router = express.Router()
@@ -31,13 +37,23 @@ transpoter.verify((error,success)=>{
 //Sign up 
 
 const signup=async(req,res)=>{
-    const {name,email,password,dateofbirth}= req.body
+    const {name,email,password}= req.body
 
     try {
        // checking if user exist
 
     const exist = await UserModel.findOne({email})
+        
+        if(!email || !password){
+            throw Error("All field must be filled")
+        }
 
+        if (!validator.isEmail(email)){
+            throw Error("Email not Valid")
+        }
+        // if (!validator.isStrongPassword(password)){
+        //     throw Error ("password is not Strong enough")
+        // }
     if(exist){
         throw Error ("Email already exist")
     }
@@ -45,17 +61,20 @@ const signup=async(req,res)=>{
     const salt= await bcrypt.genSalt(10)
 
     const hash = await bcrypt.hash(password, salt)
-
+    
     const user = await UserModel.create({
         name,
         email,
         password:hash,
-        dateofbirth,
         verified:false
     }).then(result=>{
-        // res.status(200).json({email,result})
+         
         sendVerification(result,res)
+        const token =  CreateToken(result._id)
+        console.log({email,token})
     })
+
+    
      
         // res.status(200).json({User})
     } 
@@ -185,8 +204,42 @@ const resend = async (req, res)=>{
     }
 }
 
+// login User 
+const Login = async (req, res)=>{
+    try {
+        const {email, password }= req.body
+
+    if (!email || !password){
+        throw Error ("All fields must be filled with the correct details")
+    }
+
+    const user = await UserModel.findOne({email})
+
+    if (!user){
+        throw Error ("Incorrect Email")
+    }
+
+    const match = await bcrypt.compare(password,user.password)
+
+    if (!match){
+        throw Error ("incorrect password")
+    }
+
+    if (!user.verified){
+        throw Error ("Email has not been Verified")
+    }
+
+    const token = CreateToken(user._id)
+
+    res.status(200).json({user, token})
+    } catch (error) {
+        error ? res.status(400).json({error:error.message}) : null
+    }
+}
+
 module.exports={
     signup,
     verify,
-    resend
+    resend,
+    Login
 }

@@ -17,7 +17,6 @@ const UserSchema = new schema({
         required:true,
         unique:true
     },
-    dateofbirth:Date,
     //add another property to the schema which is booloen value with an initial value of false
     verified:Boolean
 })

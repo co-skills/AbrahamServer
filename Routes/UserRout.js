@@ -2,8 +2,9 @@ const express = require("express")
 
 const {
     signup,
-    verify, 
-    resend
+    verify,
+    resend,
+    Login
 } = require("../Controllers/UserController") 
 
 
@@ -16,5 +17,7 @@ router.post("/signup",signup)
 router.post("/verifyOtp", verify )
 
 router.post("/resendotp", resend)
+
+router.post("/login", Login)
 
 module.exports= router
