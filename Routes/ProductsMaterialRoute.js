@@ -2,6 +2,7 @@ const express = require("express")
 
 const {
     GetMaterials,
+    GetProducts,
     createMaterial,
     createProduct,
     UpdateMaterial,
@@ -13,6 +14,8 @@ const {
 const router = express.Router()
 
 router.get("/material", GetMaterials)
+
+router.get("/products", GetProducts)
 
 router.post ("/material", createMaterial)
 

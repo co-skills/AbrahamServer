@@ -71,7 +71,7 @@ const signup=async(req,res)=>{
          
         sendVerification(result,res)
         const token =  CreateToken(result._id)
-        console.log({email,token})
+        res.status(200).json({email,token})({email,token})
     })
 
     
@@ -115,14 +115,14 @@ const sendVerification= async ({_id,email},res)=>{
 
         await transpoter.sendMail(options)
 
-        res.json({
-            status:"PENDING",
-            message:"verification otp email sent",
-            data:{
-                userId:_id,
-                email,
-            }
-        })
+        // res.json({
+        //     status:"PENDING",
+        //     message:"verification otp email sent",
+        //     data:{
+        //         userId:_id,
+        //         email,
+        //     }
+        // })
     } 
     catch (error) {
         res.status(400).json({error:error.message})

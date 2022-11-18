@@ -14,6 +14,18 @@ const GetMaterials = async (req, res)=>{
     error ? res.status(400).json ({error:error.message}) : null
   }
 }
+
+const GetProducts = async (req,res)=>{
+  try {
+    const pro = await products.find({}).sort({createdAt:-1})
+
+    res.status(200).json(pro)
+  } 
+  catch (error) {
+    return error ? res.status(400).json({error:error.message})  : null
+  }
+}
+
 const createMaterial= async (req,res)=>{
   try {
     const {Name,collectionName, Price, AmonutSold} = req.body
@@ -121,6 +133,7 @@ const UpdateMaterial= async (req,res)=>{
 
 module.exports={
     GetMaterials,
+    GetProducts,
     createMaterial,
     createProduct,
     UpdateMaterial,
