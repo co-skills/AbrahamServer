@@ -71,7 +71,8 @@ const signup=async(req,res)=>{
          
         sendVerification(result,res)
         const token =  CreateToken(result._id)
-        res.status(200).json({email,token})({email,token})
+        const id=result._id
+        res.status(200).json({email,id,token})
     })
 
     
