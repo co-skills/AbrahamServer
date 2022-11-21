@@ -13,17 +13,21 @@ const customerSchema = new schema ({
         required:true
     },
     PhoneNumber:{
-        type:Number,
+        type:String,
         required:true,
         unique:true
     },
-    email:{
-        type:String
+    DriverName:{
+        type:String,
+        required:true
+    },
+    SiteLocation:{
+        type:String,
+        required:true
     },
 
-    itemsBought:{
-        type:String
-    },
+    itemsBought:[],
+        
     TotalAmountPaid:{
         type:Number,
         required:true

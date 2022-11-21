@@ -4,10 +4,25 @@ const Customer = require("../Model/CustomerModel")
 
 const createCustomer= async (req,res)=>{
 
-    const {FirstName,LastName,PhoneNumber,email,TotalAmountPaid}=req.body
+    const {
+        FirstName,
+            LastName,
+            PhoneNumber,
+            DriverName,
+            SiteLocation,
+            itemsBought,
+            TotalAmountPaid
+    }=req.body
 
     try {
-        const CreateCustomer = await Customer.create({FirstName,LastName,PhoneNumber,email,TotalAmountPaid})
+        const CreateCustomer = await Customer.create({
+            FirstName,
+            LastName,
+            PhoneNumber,
+            DriverName,
+            SiteLocation,
+            itemsBought,
+            TotalAmountPaid})
 
         res.status (200).json(CreateCustomer)
     }
