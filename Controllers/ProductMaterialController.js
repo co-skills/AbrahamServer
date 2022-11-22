@@ -91,7 +91,7 @@ const DeleteMaterial = async (req,res)=>{
       return res.status(404).json({error:'Information does not Exist'})
   }
 
-  const Mat = await MatModel.findOneAndDelete({_id:id})
+  const Mat = await material.findOneAndDelete({_id:id})
 
   if(!Mat){
       return res.status(400).json({error:"Information does not Exist"})
