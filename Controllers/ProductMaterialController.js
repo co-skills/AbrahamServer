@@ -70,7 +70,7 @@ const GetandPopulateProducts = async (req, res)=>{
   try {
     const {name} = req.params
 
-    const mat=await material.find({collectionName:name})
+    const mat=await material.find({collectionName:name}).sort({createdAt:-1})
      
     console.log(mat)
     const pro = await products.findOneAndUpdate({collectionName:name},{materialss:mat} )
