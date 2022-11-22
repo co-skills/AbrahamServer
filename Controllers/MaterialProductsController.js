@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+const Customer = require("../Model/CustomerModel")
 
 const {
     material,
@@ -27,8 +28,9 @@ const GetandPopulateProducts = async (req, res)=>{
 
 const updateProduct = async (req, res)=>{
   try {
-    const pro =await  products.findOneAndUpdate({id:req.params.id},{$push:{materialss:req.body.materialId}}, {new:true})
-
+    const pro =await Customer.aggregate([
+      {$group:{_id:"$FirstName"}}
+    ])
   res.status(200).json (pro)
   } 
   catch (error) {
@@ -40,5 +42,6 @@ const updateProduct = async (req, res)=>{
 }
 
 module.exports={
-  GetandPopulateProducts
+  GetandPopulateProducts,
+  updateProduct
 }

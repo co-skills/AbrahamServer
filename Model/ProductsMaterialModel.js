@@ -23,7 +23,7 @@ const MaterialSchema = new Schema ({
     //     type:String,
     //     required:true
     // },
-})
+},{timestamps:true})
 
 const ProductSchema = new Schema({
     collectionName:{
@@ -31,7 +31,7 @@ const ProductSchema = new Schema({
     },
     materialss:[]
 
-})
+},{timestamps:true})
 
 const material = mongoose.model("materials", MaterialSchema)
 

@@ -1,7 +1,8 @@
 const express = require("express")
 
 const {
-    GetandPopulateProducts
+    GetandPopulateProducts,
+    updateProduct
 }= require("../Controllers/MaterialProductsController")
 
 const router = express.Router()
@@ -14,5 +15,6 @@ const router = express.Router()
 
  router.get("/products/:name",GetandPopulateProducts)
 
+ router.get("/products",updateProduct)
 
 module.exports=router

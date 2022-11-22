@@ -186,6 +186,38 @@ const verify = async(req, res)=>{
     }
 }
 
+const MakeAdmin = async (rea,req)=>{
+    try {
+        const {email }= req.body
+
+    if (!email ){
+        throw Error ("All fields must be filled with the correct details")
+    }
+
+    const user = await UserModel.findOne({email})
+
+    if (!user){
+        throw Error ("Incorrect Email")
+    }
+
+    //const match = await bcrypt.compare(password,user.password)
+
+    // if (!match){
+    //     throw Error ("incorrect password")
+    // }
+
+    if (!user.verified){
+        throw Error ("Email has not been Verified")
+    }
+
+    //const token = CreateToken(user._id)
+
+    res.status(200).json({user, token})
+    } catch (error) {
+        error ? res.status(400).json({error:error.message}) : null
+    }
+}
+
 const resend = async (req, res)=>{
     try {
         let { userId, email} = req.body
