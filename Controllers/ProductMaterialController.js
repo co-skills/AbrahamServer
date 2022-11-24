@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+const Customer = require("../Model/CustomerModel")
 const {
     material,
     products
@@ -132,7 +133,7 @@ const UpdateMaterial= async (req,res)=>{
 
 const matcus = async (req, res)=>{
   try {
-    const materialName= req.body
+    const {materialName}= req.body
 
     const pro =await Customer.aggregate([
       {$project:{_id:0}},
