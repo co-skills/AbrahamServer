@@ -130,6 +130,33 @@ const UpdateMaterial= async (req,res)=>{
   res.status(200).json(Mat)
 }
 
+const matcus = async (req, res)=>{
+  try {
+    const materialName= req.body
+
+    const pro =await Customer.aggregate([
+      {$project:{_id:0}},
+      {$unwind:"$itemsBought"},
+      {$match:{"itemsBought.item":{$eq: materialName}} }
+    ])
+   
+  
+     const root = await material.findOneAndUpdate({Name:materialName},{customers:pro})
+
+    res.status(200).json(root)
+    
+  } 
+  catch (error) {
+    return(
+      error ? res.status(400).json({error:error.message}) :null
+      
+    )
+    console.log(error)
+    
+  }
+}
+
+
 
 module.exports={
     GetMaterials,
@@ -139,5 +166,6 @@ module.exports={
     UpdateMaterial,
     DeleteMaterial,
     GetandPopulateProducts,
-    DeleteProducts
+    DeleteProducts,
+    matcus
 }

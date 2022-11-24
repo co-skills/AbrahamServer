@@ -8,7 +8,8 @@ const {
     UpdateMaterial,
     DeleteMaterial,
     GetandPopulateProducts,
-    DeleteProducts
+    DeleteProducts,
+    matcus
 }= require("../Controllers/ProductMaterialController")
 
 const router = express.Router()
@@ -28,6 +29,8 @@ router.delete('/material/:id', DeleteMaterial)
 router.patch("/material/:id", UpdateMaterial)
 
 router.delete('/products/:name', DeleteProducts)
+
+router.patch("/materialCustomer",matcus)
 
 
 module.exports=router

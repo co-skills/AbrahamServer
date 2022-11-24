@@ -19,10 +19,7 @@ const MaterialSchema = new Schema ({
         type:Number,
         required:true
     },
-    // collectionName:{
-    //     type:String,
-    //     required:true
-    // },
+    customers:[]
 },{timestamps:true})
 
 const ProductSchema = new Schema({
